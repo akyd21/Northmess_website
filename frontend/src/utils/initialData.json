@@ -1,0 +1,49 @@
+{
+  "menu": {
+    "MONDAY": {
+      "breakfast": ["Puri & Aloo Sabji", "Tea / Coffee"],
+      "lunch": ["Dal Tadka", "Jeera Rice", "Aloo Bhujiya", "Curd", "Papad"],
+      "dinner": ["Roti", "Paneer Butter Masala", "Seviyan Kheer"]
+    },
+    "TUESDAY": {
+      "breakfast": ["Idli & Sambar", "Coconut Chutney", "Tea / Coffee"],
+      "lunch": ["Rajma Masala", "Steamed Rice", "Mix Veg", "Papad"],
+      "dinner": ["Aloo Paratha", "Green Chutney", "Curd"]
+    },
+    "WEDNESDAY": {
+      "breakfast": ["Poha", "Jalebi", "Tea / Coffee"],
+      "lunch": ["Kadhi Pakora", "Rice", "Bhindi Fry", "Salad"],
+      "dinner": ["Roti", "Egg Curry / Matar Paneer", "Gulab Jamun"]
+    },
+    "THURSDAY": {
+      "breakfast": ["Upma", "Chutney", "Tea / Coffee"],
+      "lunch": ["Chana Masala", "Rice", "Puri", "Cucumber Salad"],
+      "dinner": ["Stuffed Sattu Paratha", "Chokha", "Curd"]
+    },
+    "FRIDAY": {
+      "breakfast": ["Uttapam", "Sambar", "Tea / Coffee"],
+      "lunch": ["Dal Makhani", "Rice", "Aloo Gobi", "Papad"],
+      "dinner": ["Roti", "Mix Veg Manchurian / Chicken Curry"]
+    },
+    "SATURDAY": {
+      "breakfast": ["Aloo Paratha", "Butter", "Tea / Coffee"],
+      "lunch": ["Chokha", "Rice", "Arhar Dal", "Fryums"],
+      "dinner": ["Fried Rice", "Chilli Paneer / Chicken", "Ice Cream"]
+    },
+    "SUNDAY": {
+      "breakfast": ["Masala Dosa", "Sambar", "Tea / Coffee"],
+      "lunch": ["Special Hyderabadi Biryani", "Raita", "Salad"],
+      "dinner": ["Roti", "Dal Fry", "Fruit Custard"]
+    }
+  },
+  "announcements": [],
+  "staff": [],
+  "gallery": [],
+  "polls": [],
+  "pollResults": [],
+  "billingConfig": {
+    "defaultMonthlyFee": 3600
+  },
+  "leaveRequests": [],
+  "billingRecords": []
+}

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>North Mess Feedback</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f6f7fb; color: #111827; }
+        .card { max-width: 720px; margin: 24px auto; background: #ffffff; border-radius: 16px; padding: 24px; }
+        h1 { color: #0f766e; }
+        .rating { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #e5e7eb; }
+        .muted { color: #6b7280; }
+        .footer { margin-top: 24px; font-size: 12px; color: #6b7280; }
+    </style>
+</head>
+<body>
+<div class="card">
+    <h1>New Feedback Submitted</h1>
+    <p><strong>Student:</strong> <span th:text="${studentName}">Student</span></p>
+    <p><strong>Roll Number:</strong> <span th:text="${rollNumber}">Roll</span></p>
+    <p><strong>Week:</strong> <span th:text="${weekLabel}">Week</span></p>
+
+    <div class="rating" th:each="entry : ${ratings}">
+        <span th:text="${entry.key}">Category</span>
+        <strong th:text="${entry.value}">5</strong>
+    </div>
+
+    <p><strong>Comments</strong></p>
+    <p class="muted" th:text="${comments}">No comments</p>
+
+    <div class="footer">
+        Submitted at <span th:text="${submittedAt}">timestamp</span>
+    </div>
+</div>
+</body>
+</html>

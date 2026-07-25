@@ -1,0 +1,13 @@
+spring:
+  config:
+    activate:
+      on-profile: dev
+
+logging:
+  level:
+    root: info
+    com.northmess: debug
+
+app:
+  mail:
+    enabled: false

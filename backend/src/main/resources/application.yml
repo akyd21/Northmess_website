@@ -1,0 +1,42 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: north-mess-backend
+  data:
+    mongodb:
+      database: ${MONGODB_DATABASE:nmms}
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 12MB
+  thymeleaf:
+    cache: false
+  mail:
+    host: ${SPRING_MAIL_HOST:smtp.gmail.com}
+    port: ${SPRING_MAIL_PORT:587}
+    username: ${SPRING_MAIL_USERNAME:}
+    password: ${SPRING_MAIL_PASSWORD:}
+    properties:
+      mail:
+        smtp:
+          auth: ${SPRING_MAIL_PROPERTIES_MAIL_SMTP_AUTH:true}
+          starttls:
+            enable: ${SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_ENABLE:true}
+
+app:
+  jwt:
+    secret: ${JWT_SECRET:nmms-development-secret-key-which-is-long-enough-for-hmac-256}
+    expiration-ms: ${JWT_EXPIRATION_MS:86400000}
+  upload-dir: ${UPLOAD_DIR:uploads}
+  mail:
+    enabled: ${MAIL_ENABLED:false}
+    from-address: ${MAIL_FROM_ADDRESS:noreply@northmess.local}
+    recipient-email: ${MAIL_RECIPIENT_EMAIL:admin@northmess.local}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
