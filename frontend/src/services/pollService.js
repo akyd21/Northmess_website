@@ -1,9 +1,8 @@
+import api from './api';
 import { dataStorage } from '../utils/dataStorage';
 
 export const pollService = {
-  getActivePolls: async () => {
-    return { data: dataStorage.getPolls() };
-  },
+  getActivePolls: async () => ({ data: dataStorage.getPolls() }),
 
   createPoll: async (pollData) => {
     const created = dataStorage.createPoll(pollData);
@@ -25,9 +24,7 @@ export const pollService = {
     return { data: { success: true } };
   },
 
-  getPollResults: async () => {
-    return { data: dataStorage.getPollResults() };
-  },
+  getPollResults: async () => ({ data: dataStorage.getPollResults() }),
 
   deletePollResult: async (resultId) => {
     dataStorage.deletePollResult(resultId);
