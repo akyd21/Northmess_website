@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FiMail, FiPhone, FiAward, FiCalendar, FiPlus, FiTrash2, FiX } from 'react-icons/fi';
+import { FiMail, FiPhone, FiAward, FiCalendar, FiPlus, FiTrash2, FiX, FiEdit2 } from 'react-icons/fi';
 import { useAuth } from '../context/AuthContext';
 import { staffService } from '../services/staffService';
 import toast from 'react-hot-toast';
@@ -23,6 +23,7 @@ export default function Staff() {
     phone: '',
     workingSince: new Date().getFullYear().toString(),
   });
+  const [editingStaffId, setEditingStaffId] = useState(null);
 
   const fetchStaff = useCallback(async () => {
     try {
@@ -48,14 +49,37 @@ export default function Staff() {
       return;
     }
     try {
-      await staffService.create(newStaff);
-      toast.success('Staff member added successfully');
-      setNewStaff({ name: '', role: '', phone: '', workingSince: new Date().getFullYear().toString() });
-      setShowAddForm(false);
+      if (editingStaffId) {
+        await staffService.update(editingStaffId, newStaff);
+        toast.success('Staff member updated successfully');
+      } else {
+        await staffService.create(newStaff);
+        toast.success('Staff member added successfully');
+      }
+      resetForm();
       fetchStaff();
     } catch {
-      toast.error('Failed to add staff member');
+      toast.error(editingStaffId ? 'Failed to update staff member' : 'Failed to add staff member');
     }
+  };
+
+  const handleEditClick = (staff) => {
+    setNewStaff({
+      name: staff.name || '',
+      role: staff.role || '',
+      phone: staff.phone || '',
+      workingSince: staff.workingSince || new Date().getFullYear().toString(),
+    });
+    setEditingStaffId(staff.id);
+    setShowAddForm(true);
+    // scroll to top where form is
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const resetForm = () => {
+    setNewStaff({ name: '', role: '', phone: '', workingSince: new Date().getFullYear().toString() });
+    setEditingStaffId(null);
+    setShowAddForm(false);
   };
 
   const handleDeleteStaff = async (id) => {
@@ -89,7 +113,10 @@ export default function Staff() {
         {isAdmin && (
           <div className="flex justify-center mb-8">
             <button
-              onClick={() => setShowAddForm(!showAddForm)}
+              onClick={() => {
+                if (showAddForm) resetForm();
+                else setShowAddForm(true);
+              }}
               className="btn-primary inline-flex items-center gap-2"
             >
               {showAddForm ? <FiX size={18} /> : <FiPlus size={18} />}
@@ -109,7 +136,7 @@ export default function Staff() {
             >
               <form onSubmit={handleAddStaff} className="card p-6 sm:p-8 max-w-2xl mx-auto space-y-4">
                 <h2 className="text-xl font-display font-bold text-dark-900 dark:text-white mb-4">
-                  ➕ Add New Staff Member
+                  {editingStaffId ? '✏️ Edit Staff Member' : '➕ Add New Staff Member'}
                 </h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
@@ -156,7 +183,7 @@ export default function Staff() {
                   </div>
                 </div>
                 <button type="submit" className="w-full btn-primary font-medium py-3">
-                  Save Staff Member
+                  {editingStaffId ? 'Update Staff Member' : 'Save Staff Member'}
                 </button>
               </form>
             </motion.div>
@@ -168,6 +195,24 @@ export default function Staff() {
           <motion.div initial="hidden" animate="visible" variants={fadeUp} custom={1} className="mb-16">
             <div className="card overflow-hidden">
               <div className="bg-gradient-to-r from-primary-600 via-primary-700 to-primary-800 p-6 sm:p-12 relative">
+                {isAdmin && (
+                  <div className="absolute top-4 right-4 flex gap-2 z-10">
+                    <button
+                      onClick={() => handleEditClick(secretary)}
+                      className="p-2 text-white/70 hover:text-white bg-black/20 hover:bg-black/40 rounded-lg backdrop-blur transition-all"
+                      title="Edit Profile"
+                    >
+                      <FiEdit2 size={16} />
+                    </button>
+                    <button
+                      onClick={() => handleDeleteStaff(secretary.id)}
+                      className="p-2 text-white/70 hover:text-red-400 bg-black/20 hover:bg-black/40 rounded-lg backdrop-blur transition-all"
+                      title="Remove Member"
+                    >
+                      <FiTrash2 size={16} />
+                    </button>
+                  </div>
+                )}
                 <div className="relative flex flex-col md:flex-row items-center gap-6 sm:gap-8">
                   <div className="w-28 h-28 sm:w-32 sm:h-32 rounded-2xl bg-white/10 backdrop-blur border border-white/20 flex items-center justify-center flex-shrink-0 shadow-2xl">
                     <span className="text-5xl">👨‍💼</span>
@@ -228,13 +273,22 @@ export default function Staff() {
                   className="card p-6 text-center group relative"
                 >
                   {isAdmin && (
-                    <button
-                      onClick={() => handleDeleteStaff(cook.id)}
-                      className="absolute top-4 right-4 p-2 text-dark-400 hover:text-red-500 transition-colors"
-                      title="Remove Staff"
-                    >
-                      <FiTrash2 size={16} />
-                    </button>
+                    <div className="absolute top-4 right-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                      <button
+                        onClick={() => handleEditClick(cook)}
+                        className="p-2 text-dark-400 hover:text-primary-500 transition-colors bg-white dark:bg-dark-800 rounded-lg shadow-sm"
+                        title="Edit Staff"
+                      >
+                        <FiEdit2 size={16} />
+                      </button>
+                      <button
+                        onClick={() => handleDeleteStaff(cook.id)}
+                        className="p-2 text-dark-400 hover:text-red-500 transition-colors bg-white dark:bg-dark-800 rounded-lg shadow-sm"
+                        title="Remove Staff"
+                      >
+                        <FiTrash2 size={16} />
+                      </button>
+                    </div>
                   )}
 
                   <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-primary-100 to-primary-50 dark:from-primary-900/30 dark:to-primary-800/20 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
