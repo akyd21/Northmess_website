@@ -177,13 +177,6 @@ export default function Login() {
           </Link>
 
           {/* Demo Credentials */}
-          <div className="mt-8 p-4 rounded-xl bg-primary-50 dark:bg-primary-900/20 border border-primary-100 dark:border-primary-800/30">
-            <p className="text-xs font-medium text-primary-700 dark:text-primary-400 mb-2">Demo Credentials</p>
-            <div className="text-xs text-primary-600 dark:text-primary-500 space-y-1">
-              <p><strong>Student:</strong> student@test.com / password123</p>
-              <p><strong>Admin:</strong> admin@test.com / admin123</p>
-            </div>
-          </div>
         </motion.div>
       </div>
     </div>

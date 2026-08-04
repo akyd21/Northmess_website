@@ -116,7 +116,7 @@ export default function Footer() {
               © {currentYear} North Mess Management System. All rights reserved.
             </p>
             <p className="text-sm text-dark-500 flex items-center gap-1">
-              Made with <FiHeart className="text-red-500" size={14} /> for students
+              Made with <FiHeart className="text-red-500" size={14} /> ak for students
             </p>
           </div>
         </div>
