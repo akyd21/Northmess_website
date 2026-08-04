@@ -59,13 +59,6 @@ export default function StudentDashboard() {
 
   const quickLinks = [
     {
-      to: '/billing',
-      icon: <FiCreditCard size={24} />,
-      title: 'Mess Fee & Billing',
-      desc: 'Daily rate tracker & leave billing',
-      gradient: 'from-emerald-500 to-teal-500',
-    },
-    {
       to: '/menu',
       icon: <FiCalendar size={24} />,
       title: "Today's Menu",

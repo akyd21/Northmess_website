@@ -20,13 +20,11 @@ import Feedback from './pages/Feedback';
 import Complaints from './pages/Complaints';
 import Announcements from './pages/Announcements';
 import Profile from './pages/Profile';
-import StudentBilling from './pages/StudentBilling';
 
 // Admin pages
 import AdminDashboard from './pages/AdminDashboard';
 import Students from './pages/Students';
 import AdminPolls from './pages/AdminPolls';
-import AdminBilling from './pages/AdminBilling';
 
 function App() {
   const location = useLocation();
@@ -85,14 +83,6 @@ function App() {
                 </ProtectedRoute>
               }
             />
-            <Route
-              path="/billing"
-              element={
-                <ProtectedRoute>
-                  <StudentBilling />
-                </ProtectedRoute>
-              }
-            />
 
             {/* ─── Admin Routes ─── */}
             <Route
@@ -100,14 +90,6 @@ function App() {
               element={
                 <ProtectedRoute requireAdmin>
                   <AdminDashboard />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/admin/billing"
-              element={
-                <ProtectedRoute requireAdmin>
-                  <AdminBilling />
                 </ProtectedRoute>
               }
             />

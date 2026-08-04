@@ -54,7 +54,6 @@ export default function AdminDashboard() {
 
   const quickActions = [
     { to: '/admin/students', icon: <FiUsers size={22} />, label: 'Manage Students', desc: 'Approve, view, manage registrations', color: 'bg-blue-500' },
-    { to: '/admin/billing', icon: <FiCreditCard size={22} />, label: 'Mess Fee & Billing', desc: 'Daily rate calculations, leaves & payments', color: 'bg-emerald-500' },
     { to: '/admin/polls', icon: <FiCheckSquare size={22} />, label: 'Student Polls', desc: 'Create queries, track live votes & store results', color: 'bg-indigo-500' },
     { to: '/admin/menu', icon: <FiCalendar size={22} />, label: 'Update Menu', desc: 'Daily and weekly menu management', color: 'bg-primary-500' },
     { to: '/admin/feedback', icon: <FiBarChart2 size={22} />, label: 'View Feedback', desc: 'Analytics and student feedback', color: 'bg-purple-500' },

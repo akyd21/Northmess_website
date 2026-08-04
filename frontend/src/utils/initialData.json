@@ -40,10 +40,5 @@
   "staff": [],
   "gallery": [],
   "polls": [],
-  "pollResults": [],
-  "billingConfig": {
-    "defaultMonthlyFee": 3600
-  },
-  "leaveRequests": [],
-  "billingRecords": []
+  "pollResults": []
 }
