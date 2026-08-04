@@ -4,9 +4,6 @@ server:
 spring:
   application:
     name: north-mess-backend
-  data:
-    mongodb:
-      database: ${MONGODB_DATABASE:nmms}
   servlet:
     multipart:
       max-file-size: 10MB
