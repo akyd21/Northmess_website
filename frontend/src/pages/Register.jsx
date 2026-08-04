@@ -240,7 +240,7 @@ export default function Register() {
                       className="input-field pl-11"
                       {...register('email', {
                         required: 'Email is required',
-                        pattern: { value: /^\S+@\S+$/i, message: 'Invalid email' },
+                        pattern: { value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i, message: 'Invalid email format' },
                       })}
                     />
                   </div>
