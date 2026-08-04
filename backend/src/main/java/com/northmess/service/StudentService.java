@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 public class StudentService {
 
     private final StudentRepository studentRepository;
+    private final EmailService emailService;
 
     public List<Student> getAll(String status, String q) {
         if (q != null && !q.isBlank()) {
@@ -49,9 +50,16 @@ public class StudentService {
     }
 
     public void delete(String id) {
-        if (!studentRepository.existsById(id)) {
-            throw new ResourceNotFoundException("Student not found");
-        }
+        Student student = studentRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Student not found"));
+        
+        String email = student.getEmail();
+        String name = student.getName();
+
         studentRepository.deleteById(id);
+        
+        if (email != null && !email.isBlank()) {
+            emailService.sendDeletionEmail(email, name);
+        }
     }
 }

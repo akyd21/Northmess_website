@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import {
   FiUsers, FiSearch, FiFilter, FiCheckCircle, FiXCircle,
   FiChevronDown, FiMail, FiPhone, FiHash, FiHome, FiRefreshCw,
-  FiCamera, FiCreditCard,
+  FiCamera, FiCreditCard, FiTrash2,
 } from 'react-icons/fi';
 import { DEPARTMENTS, YEARS } from '../utils/constants';
 import { getInitials, getAvatarColor, formatDate } from '../utils/helpers';
@@ -138,6 +138,24 @@ export default function Students() {
 
   const handleReject = (id) => updateStudentStatus(id, 'reject');
 
+  const handleDelete = async (id, name) => {
+    if (!window.confirm(`Are you sure you want to remove ${name} from the mess? They will receive an email notification.`)) {
+      return;
+    }
+
+    setActionLoadingId(id);
+    try {
+      await studentService.delete(id);
+      toast.success('Student removed successfully');
+      await fetchStudents();
+    } catch (error) {
+      const message = error.response?.data?.message || 'Failed to remove student';
+      toast.error(message);
+    } finally {
+      setActionLoadingId(null);
+    }
+  };
+
   return (
     <div className="page-container">
       <div className="content-container">
@@ -156,7 +174,7 @@ export default function Students() {
         {/* Stats */}
         <motion.div initial="hidden" animate="visible" className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
           {[
-            { label: 'Total Students', value: students.length, emoji: '👥', color: 'text-blue-500' },
+            { label: 'Total Students', value: approvedCount, emoji: '👥', color: 'text-blue-500' },
             { label: 'Approved', value: approvedCount, emoji: '✅', color: 'text-green-500' },
             { label: 'Pending Approval', value: pendingCount, emoji: '⏳', color: 'text-amber-500' },
           ].map((stat, i) => (
@@ -309,27 +327,37 @@ export default function Students() {
                       </p>
                     </div>
 
-                    {/* Actions for Pending */}
-                    {student.status === 'PENDING' && (
-                      <div className="hidden sm:flex items-center gap-2">
-                        <button
-                          onClick={(e) => { e.stopPropagation(); handleApprove(student.id); }}
-                          disabled={actionLoadingId === student.id}
-                          className="p-2 rounded-lg bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 hover:bg-green-200 dark:hover:bg-green-900/50 transition-colors"
-                          title="Approve"
-                        >
-                          <FiCheckCircle size={18} />
-                        </button>
-                        <button
-                          onClick={(e) => { e.stopPropagation(); handleReject(student.id); }}
-                          disabled={actionLoadingId === student.id}
-                          className="p-2 rounded-lg bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 hover:bg-red-200 dark:hover:bg-red-900/50 transition-colors"
-                          title="Reject"
-                        >
-                          <FiXCircle size={18} />
-                        </button>
-                      </div>
-                    )}
+                    {/* Actions */}
+                    <div className="hidden sm:flex items-center gap-2">
+                      {student.status === 'PENDING' && (
+                        <>
+                          <button
+                            onClick={(e) => { e.stopPropagation(); handleApprove(student.id); }}
+                            disabled={actionLoadingId === student.id}
+                            className="p-2 rounded-lg bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 hover:bg-green-200 dark:hover:bg-green-900/50 transition-colors"
+                            title="Approve"
+                          >
+                            <FiCheckCircle size={18} />
+                          </button>
+                          <button
+                            onClick={(e) => { e.stopPropagation(); handleReject(student.id); }}
+                            disabled={actionLoadingId === student.id}
+                            className="p-2 rounded-lg bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 hover:bg-red-200 dark:hover:bg-red-900/50 transition-colors"
+                            title="Reject"
+                          >
+                            <FiXCircle size={18} />
+                          </button>
+                        </>
+                      )}
+                      <button
+                        onClick={(e) => { e.stopPropagation(); handleDelete(student.id, student.name); }}
+                        disabled={actionLoadingId === student.id}
+                        className="p-2 rounded-lg bg-rose-100 dark:bg-rose-900/30 text-rose-600 dark:text-rose-400 hover:bg-rose-200 dark:hover:bg-rose-900/50 transition-colors"
+                        title="Delete Student"
+                      >
+                        <FiTrash2 size={18} />
+                      </button>
+                    </div>
 
                     <FiChevronDown
                       className={`text-dark-400 transition-transform flex-shrink-0 ${isExpanded ? 'rotate-180' : ''}`}
@@ -411,24 +439,33 @@ export default function Students() {
                       </p>
 
                       {/* Mobile Actions */}
-                      {student.status === 'PENDING' && (
-                        <div className="flex gap-3 mt-4 sm:hidden">
-                          <button
-                            onClick={() => handleApprove(student.id)}
-                            disabled={actionLoadingId === student.id}
-                            className="flex-1 px-4 py-2 rounded-xl bg-green-500 text-white font-medium text-sm hover:bg-green-600 transition-colors flex items-center justify-center gap-2"
-                          >
-                            <FiCheckCircle size={14} /> Approve
-                          </button>
-                          <button
-                            onClick={() => handleReject(student.id)}
-                            disabled={actionLoadingId === student.id}
-                            className="flex-1 px-4 py-2 rounded-xl bg-red-500 text-white font-medium text-sm hover:bg-red-600 transition-colors flex items-center justify-center gap-2"
-                          >
-                            <FiXCircle size={14} /> Reject
-                          </button>
-                        </div>
-                      )}
+                      <div className="flex flex-col gap-3 mt-4 sm:hidden">
+                        {student.status === 'PENDING' && (
+                          <div className="flex gap-3">
+                            <button
+                              onClick={() => handleApprove(student.id)}
+                              disabled={actionLoadingId === student.id}
+                              className="flex-1 px-4 py-2 rounded-xl bg-green-500 text-white font-medium text-sm hover:bg-green-600 transition-colors flex items-center justify-center gap-2"
+                            >
+                              <FiCheckCircle size={14} /> Approve
+                            </button>
+                            <button
+                              onClick={() => handleReject(student.id)}
+                              disabled={actionLoadingId === student.id}
+                              className="flex-1 px-4 py-2 rounded-xl bg-red-500 text-white font-medium text-sm hover:bg-red-600 transition-colors flex items-center justify-center gap-2"
+                            >
+                              <FiXCircle size={14} /> Reject
+                            </button>
+                          </div>
+                        )}
+                        <button
+                          onClick={() => handleDelete(student.id, student.name)}
+                          disabled={actionLoadingId === student.id}
+                          className="w-full px-4 py-2 rounded-xl bg-rose-500 text-white font-medium text-sm hover:bg-rose-600 transition-colors flex items-center justify-center gap-2"
+                        >
+                          <FiTrash2 size={14} /> Remove Student
+                        </button>
+                      </div>
                     </div>
                   )}
                 </motion.div>

@@ -27,7 +27,7 @@ public class ReportService {
 
     public Map<String, Object> summary() {
         Map<String, Object> summary = new LinkedHashMap<>();
-        summary.put("totalStudents", studentRepository.count());
+        summary.put("totalStudents", studentRepository.findByStatus(ApprovalStatus.APPROVED).size());
         summary.put("pendingStudents", studentRepository.findByStatus(ApprovalStatus.PENDING).size());
         summary.put("approvedStudents", studentRepository.findByStatus(ApprovalStatus.APPROVED).size());
         summary.put("rejectedStudents", studentRepository.findByStatus(ApprovalStatus.REJECTED).size());
