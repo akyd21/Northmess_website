@@ -16,40 +16,14 @@ const fadeUp = {
 };
 
 const contactDetails = [
-  {
-    icon: <FiPhone />,
-    label: 'Phone',
-    value: '+91 98765 43210',
-    link: 'tel:+919876543210',
-    gradient: 'from-blue-500 to-indigo-500',
-  },
-  {
-    icon: <FiMail />,
-    label: 'Email',
-    value: 'northmess@university.edu',
-    link: 'mailto:northmess@university.edu',
-    gradient: 'from-primary-500 to-emerald-500',
-  },
-  {
-    icon: <FiMapPin />,
-    label: 'Location',
-    value: 'North Hostel, University Campus',
-    link: null,
-    gradient: 'from-rose-500 to-red-500',
-  },
-  {
-    icon: <FiClock />,
-    label: 'Meal Hours',
-    value: 'B: 7:30-9:30 | L: 12-2 | D: 7-9',
-    link: null,
-    gradient: 'from-amber-500 to-orange-500',
-  },
+
+
 ];
 
 const keyContacts = [
-  { name: 'Dr. Ramesh Kumar', role: 'Mess Secretary', phone: '+91 98765 43210', email: 'ramesh.kumar@university.edu' },
-  { name: 'Mr. Suresh', role: 'Mess Supervisor', phone: '+91 87654 32109', email: 'suresh@university.edu' },
-  { name: 'Hostel Office', role: 'General Enquiries', phone: '+91 76543 21098', email: 'hostel@university.edu' },
+  { name: 'Sangam Yadav', role: 'Mess Secretary', phone: '+91 9519345606' },
+  { name: 'Ajit kumar', role: 'Mess Supervisor', phone: '+91 79 79989459' },
+  { name: 'Hostel Office', role: 'General Enquiries', phone: '+91 7654321098'},
 ];
 
 export default function Contact() {
@@ -284,7 +258,7 @@ export default function Contact() {
                     { label: 'Mess Office', time: '9:00 AM - 5:00 PM', days: 'Mon - Sat' },
                     { label: 'Breakfast', time: '7:30 AM - 9:30 AM', days: 'Daily' },
                     { label: 'Lunch', time: '12:00 PM - 2:00 PM', days: 'Daily' },
-                    { label: 'Dinner', time: '7:00 PM - 9:00 PM', days: 'Daily' },
+                    { label: 'Dinner', time: '8:30 PM - 9:30 PM', days: 'Daily' },
                   ].map((item) => (
                     <div key={item.label} className="flex items-center justify-between p-3 rounded-xl bg-dark-50 dark:bg-dark-800/50">
                       <div>

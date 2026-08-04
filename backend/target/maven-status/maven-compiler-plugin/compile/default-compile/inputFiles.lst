@@ -55,7 +55,11 @@ C:\Northmess_website\backend\src\main\java\com\northmess\request\PaymentVerifica
 C:\Northmess_website\backend\src\main\java\com\northmess\request\ProfileUpdateRequest.java
 C:\Northmess_website\backend\src\main\java\com\northmess\request\RegisterRequest.java
 C:\Northmess_website\backend\src\main\java\com\northmess\request\StaffForm.java
+C:\Northmess_website\backend\src\main\java\com\northmess\request\TransactionSubmitRequest.java
+C:\Northmess_website\backend\src\main\java\com\northmess\request\VerifyTransactionRequest.java
 C:\Northmess_website\backend\src\main\java\com\northmess\request\VoteRequest.java
+C:\Northmess_website\backend\src\main\java\com\northmess\response\PaymentResponse.java
+C:\Northmess_website\backend\src\main\java\com\northmess\response\StudentSummaryResponse.java
 C:\Northmess_website\backend\src\main\java\com\northmess\security\CustomUserDetailsService.java
 C:\Northmess_website\backend\src\main\java\com\northmess\security\JwtAuthEntryPoint.java
 C:\Northmess_website\backend\src\main\java\com\northmess\security\JwtAuthFilter.java

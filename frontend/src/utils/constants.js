@@ -57,7 +57,6 @@ export const NAV_LINKS = [
 export const STUDENT_NAV_LINKS = [
   { path: '/dashboard', label: 'Dashboard' },
   { path: '/menu', label: 'Menu' },
-  { path: '/billing', label: 'Mess Fee' },
   { path: '/staff', label: 'Staff' },
   { path: '/polls', label: 'Polls' },
   { path: '/feedback', label: 'Feedback' },
@@ -70,6 +69,7 @@ export const ADMIN_NAV_LINKS = [
   { path: '/admin/students', label: 'Students' },
   { path: '/admin/polls', label: 'Polls' },
   { path: '/admin/menu', label: 'Menu' },
+  { path: '/admin/gallery', label: 'Gallery' },
   { path: '/admin/feedback', label: 'Feedback' },
   { path: '/admin/complaints', label: 'Complaints' },
   { path: '/admin/announcements', label: 'Announcements' },

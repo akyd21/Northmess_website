@@ -27,6 +27,7 @@ com\northmess\exception\BadRequestException.class
 com\northmess\security\JwtAuthEntryPoint.class
 com\northmess\service\ReportService.class
 com\northmess\security\JwtAuthFilter.class
+com\northmess\request\TransactionSubmitRequest.class
 com\northmess\controller\PaymentController.class
 com\northmess\repository\StaffRepository.class
 com\northmess\service\ComplaintService.class
@@ -36,6 +37,7 @@ com\northmess\config\MongoServerConfig.class
 com\northmess\controller\PollController.class
 com\northmess\entity\enums\PaymentStatus.class
 com\northmess\service\MenuService.class
+com\northmess\request\VerifyTransactionRequest.class
 com\northmess\request\PaymentVerificationRequest.class
 com\northmess\exception\ResourceNotFoundException.class
 com\northmess\config\MongoConfig.class

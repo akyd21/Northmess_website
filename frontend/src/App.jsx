@@ -20,7 +20,6 @@ import Feedback from './pages/Feedback';
 import Complaints from './pages/Complaints';
 import Announcements from './pages/Announcements';
 import Profile from './pages/Profile';
-import StudentBilling from './pages/StudentBilling';
 
 // Admin pages
 import AdminDashboard from './pages/AdminDashboard';
@@ -107,6 +106,14 @@ function App() {
               element={
                 <ProtectedRoute requireAdmin>
                   <WeeklyMenu />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/gallery"
+              element={
+                <ProtectedRoute requireAdmin>
+                  <Gallery />
                 </ProtectedRoute>
               }
             />

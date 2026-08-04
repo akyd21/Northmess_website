@@ -17,6 +17,15 @@ export const menuService = {
   getWeeklyMenu: async () => {
     try {
       const res = await api.get('/menus/weekly');
+      if (Array.isArray(res.data)) {
+        const weeklyObj = {};
+        res.data.forEach(item => {
+          if (item && item.day) {
+            weeklyObj[item.day] = item;
+          }
+        });
+        res.data = weeklyObj;
+      }
       return res;
     } catch {
       return { data: dataStorage.getMenu() };

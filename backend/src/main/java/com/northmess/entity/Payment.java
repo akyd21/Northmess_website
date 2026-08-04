@@ -20,9 +20,12 @@ public class Payment {
     private String currency = "INR";
     private String receipt;
     
+    private String transactionId; // User submitted manual transaction ID
+    private String verifiedBy; // Admin who verified the manual payment
+    
     private PaymentStatus status;
     
-    @DBRef
+    @DBRef(lazy = true)
     private Student student;
     
     private Integer month;
@@ -51,6 +54,12 @@ public class Payment {
 
     public String getReceipt() { return receipt; }
     public void setReceipt(String receipt) { this.receipt = receipt; }
+
+    public String getTransactionId() { return transactionId; }
+    public void setTransactionId(String transactionId) { this.transactionId = transactionId; }
+
+    public String getVerifiedBy() { return verifiedBy; }
+    public void setVerifiedBy(String verifiedBy) { this.verifiedBy = verifiedBy; }
 
     public PaymentStatus getStatus() { return status; }
     public void setStatus(PaymentStatus status) { this.status = status; }

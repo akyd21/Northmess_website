@@ -13,7 +13,13 @@ export const galleryService = {
 
   upload: async (data) => {
     try {
-      const res = await api.post('/gallery', data);
+      const fd = new FormData();
+      Object.entries(data).forEach(([k, v]) => {
+        if (v !== undefined && v !== null && v !== '') fd.append(k, v);
+      });
+      const res = await api.post('/gallery', fd, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      });
       dataStorage.addGalleryItem(res.data || data);
       return res;
     } catch {

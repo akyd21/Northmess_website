@@ -5,6 +5,14 @@ import { useAuth } from '../context/AuthContext';
 import { galleryService } from '../services/galleryService';
 import toast from 'react-hot-toast';
 
+const API_ORIGIN = (import.meta.env.VITE_API_URL || 'http://localhost:8080/api').replace('/api', '');
+
+function buildImageUrl(path) {
+  if (!path) return null;
+  if (path.startsWith('http')) return path;
+  return `${API_ORIGIN}${path}`;
+}
+
 const fadeUp = {
   hidden: { opacity: 0, y: 20 },
   visible: (i = 0) => ({
@@ -13,14 +21,7 @@ const fadeUp = {
   }),
 };
 
-const gradients = [
-  'from-primary-500 to-emerald-500',
-  'from-amber-500 to-orange-500',
-  'from-blue-500 to-indigo-500',
-  'from-purple-500 to-pink-500',
-  'from-rose-500 to-red-500',
-  'from-teal-500 to-cyan-500',
-];
+
 
 export default function Gallery() {
   const { isAdmin } = useAuth();
@@ -31,9 +32,8 @@ export default function Gallery() {
   const [newItem, setNewItem] = useState({
     title: '',
     category: 'Food',
-    desc: '',
-    emoji: '📸',
-    imageUrl: '',
+    description: '',
+    image: null,
   });
 
   const categories = ['All', 'Food', 'Dining Hall', 'Kitchen', 'Events'];
@@ -65,12 +65,15 @@ export default function Gallery() {
       toast.error('Title is required');
       return;
     }
+    if (!newItem.image) {
+      toast.error('Please select an image to upload');
+      return;
+    }
 
     try {
-      const gradient = gradients[Math.floor(Math.random() * gradients.length)];
-      await galleryService.upload({ ...newItem, gradient });
+      await galleryService.upload(newItem);
       toast.success('Photo added to gallery!');
-      setNewItem({ title: '', category: 'Food', desc: '', emoji: '📸', imageUrl: '' });
+      setNewItem({ title: '', category: 'Food', description: '', image: null });
       setShowAddForm(false);
       fetchGallery();
     } catch {
@@ -168,13 +171,13 @@ export default function Gallery() {
                     </select>
                   </div>
                   <div>
-                    <label className="block text-xs font-medium text-dark-700 dark:text-dark-300 mb-1">Icon / Emoji</label>
+                    <label className="block text-xs font-medium text-dark-700 dark:text-dark-300 mb-1">Image File</label>
                     <input
-                      type="text"
-                      placeholder="🍚, 🥗, 🍳"
-                      value={newItem.emoji}
-                      onChange={(e) => setNewItem({ ...newItem, emoji: e.target.value })}
-                      className="input-field"
+                      type="file"
+                      accept="image/*"
+                      onChange={(e) => setNewItem({ ...newItem, image: e.target.files[0] })}
+                      className="input-field py-2"
+                      required
                     />
                   </div>
                 </div>
@@ -183,8 +186,8 @@ export default function Gallery() {
                   <input
                     type="text"
                     placeholder="Short caption describing the photo..."
-                    value={newItem.desc}
-                    onChange={(e) => setNewItem({ ...newItem, desc: e.target.value })}
+                    value={newItem.description}
+                    onChange={(e) => setNewItem({ ...newItem, description: e.target.value })}
                     className="input-field"
                   />
                 </div>
@@ -240,10 +243,18 @@ export default function Gallery() {
                 )}
 
                 {/* Image placeholder with gradient */}
-                <div className={`aspect-square bg-gradient-to-br ${item.gradient || 'from-primary-500 to-emerald-500'} relative flex items-center justify-center overflow-hidden`}>
-                  <span className="text-7xl opacity-80 group-hover:scale-125 transition-transform duration-500">
-                    {item.emoji || '📸'}
-                  </span>
+                <div className={`aspect-square bg-dark-100 dark:bg-dark-800 relative flex items-center justify-center overflow-hidden`}>
+                  {item.imageUrl ? (
+                    <img 
+                      src={buildImageUrl(item.imageUrl)} 
+                      alt={item.title} 
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" 
+                    />
+                  ) : (
+                    <span className="text-7xl opacity-80 group-hover:scale-125 transition-transform duration-500">
+                      📸
+                    </span>
+                  )}
                   {/* Overlay on hover */}
                   <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-all duration-300 flex items-center justify-center">
                     <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">
@@ -318,12 +329,16 @@ export default function Gallery() {
               className="max-w-2xl w-full"
               onClick={(e) => e.stopPropagation()}
             >
-              <div className={`aspect-video bg-gradient-to-br ${lightbox.gradient || 'from-primary-500 to-emerald-500'} rounded-3xl flex items-center justify-center shadow-2xl mb-6`}>
-                <span className="text-9xl">{lightbox.emoji || '📸'}</span>
+              <div className={`aspect-video bg-dark-100 dark:bg-dark-800 rounded-3xl flex items-center justify-center shadow-2xl mb-6 overflow-hidden`}>
+                {lightbox.imageUrl ? (
+                  <img src={buildImageUrl(lightbox.imageUrl)} alt={lightbox.title} className="w-full h-full object-contain" />
+                ) : (
+                  <span className="text-9xl">📸</span>
+                )}
               </div>
               <div className="text-center">
                 <h2 className="text-2xl font-display font-bold text-white mb-2">{lightbox.title}</h2>
-                <p className="text-white/60">{lightbox.desc}</p>
+                <p className="text-white/60">{lightbox.description || lightbox.desc}</p>
                 <span className="inline-block mt-3 px-3 py-1 rounded-full bg-white/10 text-white/70 text-sm">
                   {lightbox.category}
                 </span>
