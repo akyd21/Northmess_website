@@ -24,7 +24,9 @@ public class CorsConfig {
                 "http://127.0.0.1:5173",
                 "http://127.0.0.1:3000",
                 "https://northmess-website.vercel.app",
-                "https://*.vercel.app"
+                "https://*.vercel.app",
+                "https://northmess-websites.onrender.com",
+                "https://*.onrender.com"
         ));
 
         if (frontendUrl != null && !frontendUrl.isBlank()) {
