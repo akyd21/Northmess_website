@@ -8,6 +8,9 @@ spring:
     multipart:
       max-file-size: 10MB
       max-request-size: 12MB
+  data:
+    mongodb:
+      uri: ${MONGODB_URI:mongodb://localhost:27017/northmess}
   thymeleaf:
     cache: false
   mail:
